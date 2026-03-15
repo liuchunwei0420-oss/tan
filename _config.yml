@@ -1,6 +1,10 @@
 title: "唐詩三百首"
 description: "我的唐詩收藏網站"
 
+# 網域設定
+url: "https://iaiaia.me"
+baseurl: ""
+
 # 換一個更穩定的主題，避開 minima 的 Bug
 remote_theme: pages-themes/minimal@v0.2.0
 plugins:
