@@ -1,32 +1,96 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>{{ page.title }} - 唐詩三百首</title>
-  <style>
-    body { font-family: "Microsoft JhengHei", sans-serif; line-height: 1.6; padding: 40px; max-width: 800px; margin: auto; background-color: #f9f9f9; }
-    .poem-box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-    .author { color: #666; font-size: 1.1em; }
-    .content { font-size: 1.4em; letter-spacing: 2px; margin-top: 20px; white-space: pre-wrap; }
-  </style>
-</head>
-<body>
-  <div class="poem-box">
-    <h1>{{ page.title }}</h1>
-    <p class="author">作者：{{ page.author }}</p>
+---
+layout: default
+---
+<style>
+  /* 這裡的 CSS 修改一次，全站 300 首詩都會同步變色 */
+  :root {
+    --paper-bg: #fdfaf2;    /* 宣紙底色 */
+    --ink-black: #2c3e50;   /* 墨黑色 */
+    --seal-red: #c0392b;    /* 印章紅色 */
+    --border-color: #e0dcd3;
+  }
 
-    {% if site.show_ads %}
-      {% include ad.html %}
-    {% endif %}
+  .poem-container {
+    background-color: var(--paper-bg);
+    padding: 40px 20px;
+    color: var(--ink-black);
+    font-family: "PingFang TC", "Microsoft JhengHei", serif;
+    max-width: 800px;
+    margin: 20px auto;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
 
-    <div class="content">{{ content }}</div>
+  /* 詩詞標題樣式 */
+  .poem-title {
+    color: var(--ink-black);
+    border-left: 5px solid var(--seal-red);
+    padding-left: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
 
-    {% if site.show_ads %}
-      {% include ad.html %}
-    {% endif %}
+  /* 作者樣式 */
+  .poem-author {
+    color: var(--seal-red);
+    font-weight: bold;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+  }
 
-    <p><a href="{{ '/' | relative_url }}">← 回首頁</a></p>
+  /* 詩詞正文：加大字體與間距 */
+  .poem-body {
+    font-size: 1.4em;
+    line-height: 2.2;
+    letter-spacing: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+  }
+
+  /* 廣告位樣式優化 */
+  .ad-slot {
+    background-color: #fff;
+    border: 1px dashed var(--seal-red);
+    padding: 15px;
+    margin: 20px 0;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #999;
+  }
+
+  /* 區塊標題（如：白話新譯） */
+  h3 {
+    color: var(--ink-black);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-top: 40px;
+  }
+</style>
+
+<div class="poem-container">
+  <h1 class="poem-title">{{ page.title }}</h1>
+  <div class="poem-author">作者：{{ page.author }}</div>
+
+  {% if site.show_ads %}
+  <div class="ad-slot">
+    {% include ad.html %}
   </div>
-</body>
-</html>
+  {% endif %}
+
+  <div class="poem-body">
+    {{ content | newline_to_br }}
+  </div>
+
+  {% if site.show_ads %}
+  <div class="ad-slot">
+    {% include ad.html %}
+  </div>
+  {% endif %}
+
+  <div style="margin-top: 30px;">
+    <a href="{{ '/' | relative_url }}" style="color: var(--seal-red); text-decoration: none;">← 返回詩詞目錄</a>
+  </div>
+</div>
