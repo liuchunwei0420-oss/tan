@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<article style="max-width: 600px; margin: 0 auto;">
+  <h1>{{ page.title }}</h1>
+  <p style="color: #666;">作者：<strong>{{ page.author }}</strong></p>
+
+  <hr>
+
+  {% include ad.html %}
+
+  <div class="poem-content" style="font-size: 1.5em; line-height: 2.5; letter-spacing: 3px; margin: 30px 0;">
+    {{ content | newline_to_br }}
+  </div>
+
+  {% include ad.html %}
+
+  <hr>
+  <a href="{{ site.baseurl }}/">回首頁</a>
+</article>
