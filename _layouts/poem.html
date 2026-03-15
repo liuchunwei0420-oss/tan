@@ -1,96 +1,117 @@
----
-layout: default
----
-<style>
-  /* 這裡的 CSS 修改一次，全站 300 首詩都會同步變色 */
-  :root {
-    --paper-bg: #fdfaf2;    /* 宣紙底色 */
-    --ink-black: #2c3e50;   /* 墨黑色 */
-    --seal-red: #c0392b;    /* 印章紅色 */
-    --border-color: #e0dcd3;
-  }
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} - 唐詩三百首</title>
+  <style>
+    /* 這裡的 CSS 修改一次，全站 300 首詩都會同步調整 */
+    :root {
+      --paper-bg: #fdfaf2;    /* 宣紙底色 */
+      --ink-black: #2c3e50;   /* 墨黑色 */
+      --seal-red: #c0392b;    /* 印章紅色 */
+      --border-color: #e0dcd3;
+      --table-border: #999;    /* 表格邊框色 */
+      --th-bg: #eaeaea;        /* 表格頭部底色 */
+    }
 
-  .poem-container {
-    background-color: var(--paper-bg);
-    padding: 40px 20px;
-    color: var(--ink-black);
-    font-family: "PingFang TC", "Microsoft JhengHei", serif;
-    max-width: 800px;
-    margin: 20px auto;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  }
+    /* 網頁整體樣式：單欄佈局，取消主題側邊欄 */
+    body {
+      font-family: "PingFang TC", "Microsoft JhengHei", serif;
+      background-color: var(--paper-bg);
+      color: var(--ink-black);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
 
-  /* 詩詞標題樣式 */
-  .poem-title {
-    color: var(--ink-black);
-    border-left: 5px solid var(--seal-red);
-    padding-left: 15px;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+    /* 詩詞主容器：控制內容寬度與居中 */
+    .poem-wrapper {
+      max-width: 800px; /* 這裡控制主內容寬度，讓它不會多出左邊部分 */
+      margin: 40px auto;
+      padding: 40px 20px;
+      background: white;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border-radius: 8px;
+    }
 
-  /* 作者樣式 */
-  .poem-author {
-    color: var(--seal-red);
-    font-weight: bold;
-    margin-bottom: 25px;
-    font-size: 1.1em;
-  }
+    h1 {
+      color: var(--seal-red);
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 15px;
+      margin-bottom: 5px;
+    }
 
-  /* 詩詞正文：加大字體與間距 */
-  .poem-body {
-    font-size: 1.4em;
-    line-height: 2.2;
-    letter-spacing: 2px;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    border-radius: 5px;
-    margin: 20px 0;
-  }
+    .author {
+      color: var(--ink-black);
+      font-size: 1.1em;
+      margin-bottom: 30px;
+    }
 
-  /* 廣告位樣式優化 */
-  .ad-slot {
-    background-color: #fff;
-    border: 1px dashed var(--seal-red);
-    padding: 15px;
-    margin: 20px 0;
-    text-align: center;
-    border-radius: 4px;
-    font-size: 0.9em;
-    color: #999;
-  }
+    /* 詩詞正文 */
+    .poem-content {
+      font-size: 1.3em;
+      line-height: 2;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+    }
 
-  /* 區塊標題（如：白話新譯） */
-  h3 {
-    color: var(--ink-black);
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 8px;
-    margin-top: 40px;
-  }
-</style>
+    /* 修正「平仄分析」不見的問題：手動 HTML 表格的樣式 */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      border: 1px solid var(--table-border);
+    }
+    th, td {
+      border: 1px solid var(--table-border);
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: var(--th-bg);
+      color: var(--ink-black);
+    }
 
-<div class="poem-container">
-  <h1 class="poem-title">{{ page.title }}</h1>
-  <div class="poem-author">作者：{{ page.author }}</div>
+    /* 處理副標題樣式（如：白話新譯, 平仄分析） */
+    h3 {
+      color: var(--ink-black);
+      margin-top: 40px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
 
-  {% if site.show_ads %}
-  <div class="ad-slot">
-    {% include ad.html %}
+    /* 廣告位樣式 */
+    .ad-container {
+      margin: 30px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="poem-wrapper">
+    <h1>{{ page.title }}</h1>
+    <p class="author">作者：{{ page.author }}</p>
+
+    {% if site.show_ads %}
+    <div class="ad-container">
+      {% include ad.html %}
+    </div>
+    {% endif %}
+
+    <div class="poem-content">
+      {{ content }}
+    </div>
+
+    {% if site.show_ads %}
+    <div class="ad-container">
+      {% include ad.html %}
+    </div>
+    {% endif %}
+
+    <p><a href="{{ '/' | relative_url }}">← 返回詩詞目錄</a></p>
   </div>
-  {% endif %}
-
-  <div class="poem-body">
-    {{ content | newline_to_br }}
-  </div>
-
-  {% if site.show_ads %}
-  <div class="ad-slot">
-    {% include ad.html %}
-  </div>
-  {% endif %}
-
-  <div style="margin-top: 30px;">
-    <a href="{{ '/' | relative_url }}" style="color: var(--seal-red); text-decoration: none;">← 返回詩詞目錄</a>
-  </div>
-</div>
+</body>
+</html>
