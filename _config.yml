@@ -1,0 +1,8 @@
+title: 唐詩三百首
+theme: minima
+remote_theme: jekyll/minima
+collections:
+  poems:
+    output: true
+    permalink: /poems/:path/
+show_ads: true
